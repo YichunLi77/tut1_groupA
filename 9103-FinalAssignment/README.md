@@ -39,6 +39,37 @@ this.rotationSpeed = random(0.2, 1);
 
 ---
 
+## C. Hover-Scale Interaction (Smooth Enlarge on Hover)
+
+**Files**
+
+* `wheel.js` — hover detection and smooth scaling logic in `update()` and `display()`
+
+**My Contribution**
+
+I implemented the hover‐scale interaction (part C) to enhance the user experience with a dynamic visual response when hovering over each wheel.
+
+**How it works**
+
+- In the `update()` method of `Wheel`, I compute the distance from the mouse pointer to the wheel center.
+- If the pointer is within the wheel radius, I set a larger `targetRadius` (1.5× base radius).
+- If not, I reset `targetRadius` back to the base radius.
+- I use `lerp()` to smoothly animate `radius` toward `targetRadius`, creating a gradual scaling effect rather than an abrupt jump.
+
+**Core Snippet**
+
+```js
+let d = dist(mouseX, mouseY, this.x, this.y);
+if (d < this.radius) {
+  this.targetRadius = this.baseRadius * 1.5;
+} else {
+  this.targetRadius = this.baseRadius;
+}
+
+this.radius = lerp(this.radius, this.targetRadius, 0.4);
+
+---
+
 ## D. Collision Response (Neighbor Displacement)
 
 **Files**
