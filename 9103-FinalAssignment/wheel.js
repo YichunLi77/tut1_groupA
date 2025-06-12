@@ -10,7 +10,7 @@ class Wheel {
 
     // Rotation properties with Perlin noise
     this.angle = random(360);
-    this.noiseOffset = random(1000); // NEW → 用于 Perlin noise 动态 rotationSpeed
+    this.noiseOffset = random(1000); // NEW → Used for Perlin noise-driven dynamic rotation speed
 
     // Colors
     this.colors = Array.from({ length: 7 }, () => randomColor());
@@ -21,10 +21,16 @@ class Wheel {
     this.dotBgColor = randomColor();
     this.finalCircleColor = randomColor();
     this.curvedLineColor = randomColor();
+
+    // constructor：
+    this.colorShiftSpeed = random(0.001, 0.005);
+    this.hueBase = random(360);
   }
 
+
+
   update() {
-    // NEW → 用 Perlin noise 驱动 rotationSpeed
+    // NEW → Use Perlin noise to drive rotationSpeed
     let noiseValue = noise(this.noiseOffset);
     this.rotationSpeed = map(noiseValue, 0, 1, 0.1, 1);
     this.angle += this.rotationSpeed;
@@ -48,13 +54,24 @@ class Wheel {
 
     // Central concentric circles
     noStroke();
-    let radii = [this.radius * 0.37, this.radius * 0.32, this.radius * 0.27, this.radius * 0.22, this.radius * 0.17, this.radius * 0.12, this.radius * 0.07];
-    for (let i = 0; i < this.colors.length; i++) {
-      fill(this.colors[i]);
-      ellipse(0, 0, radii[i] * 2);
-    }
+let radii = [this.radius * 0.37, this.radius * 0.32, this.radius * 0.27, this.radius * 0.22, this.radius * 0.17, this.radius * 0.12, this.radius * 0.07];
 
-    // (其余 display 部分不变，保持原样)
+let hueShift = (this.hueBase + frameCount * this.colorShiftSpeed * 360) % 360;
+colorMode(HSB, 360, 100, 100);
+
+for (let i = 0; i < this.colors.length; i++) {
+  if (i === 0) { // First ring uses dynamic hue shift
+    fill(hueShift, 80, 100);
+  } else {
+    colorMode(RGB, 255);
+    fill(this.colors[i]);
+    colorMode(HSB, 360, 100, 100);
+  }
+  ellipse(0, 0, radii[i] * 2);
+}
+
+colorMode(RGB, 255); // Switch back to RGB mode for the remaining elements
+
     // Ring background
     let pinkRadius = this.radius * 0.45;
     fill(this.pinkRingColor);
