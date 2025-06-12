@@ -60,7 +60,7 @@ let hueShift = (this.hueBase + frameCount * this.colorShiftSpeed * 360) % 360;
 colorMode(HSB, 360, 100, 100);
 
 for (let i = 0; i < this.colors.length; i++) {
-  if (i === 0) { // First ring uses dynamic hue shift
+  if (i < 3) { // First ring uses dynamic hue shift
     fill(hueShift, 80, 100);
   } else {
     colorMode(RGB, 255);
