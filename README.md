@@ -2,8 +2,8 @@
 
 ### Individual Animated Interpretation of *Wheels of Fortune*  
 **Animation Method:** Perlin Noise and Randomness  
-**Student:** [你的英文名字]  
-**Unikey:** [你的 Unikey]  
+**Student:** [Yichun Li]  
+**Unikey:** [yili0193]  
 
 ---
 
